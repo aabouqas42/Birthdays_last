@@ -39,52 +39,26 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/dd_edit"
+                <NumberPicker
+                    android:id="@+id/day"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@color/traspaernt"
-                    android:gravity="center"
-                    android:hint="DD"
-                    android:imeOptions="actionNext"
-                    android:inputType="numberDecimal"
-                    android:maxLength="2"
-                    android:nextFocusRight="@id/mm"
-                    android:padding="8dp"
-                    android:textColorHint="@color/white"
-                    android:textSize="30dp"></EditText>
+                    android:layout_height="match_parent"
+                    android:theme="@style/NumberPickerText"
+                    android:layout_weight="1"/>
 
-                <EditText
-                    android:id="@+id/mm_edit"
+                <NumberPicker
+                    android:id="@+id/month"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@color/traspaernt"
-                    android:gravity="center"
-                    android:hint="MM"
-                    android:imeOptions="actionNext"
-                    android:inputType="numberDecimal"
-                    android:maxLength="2"
-                    android:nextFocusRight="@id/yy"
-                    android:padding="8dp"
-                    android:textColorHint="@color/white"
-                    android:textSize="30dp"></EditText>
+                    android:layout_height="match_parent"
+                    android:theme="@style/NumberPickerText"
+                    android:layout_weight="1" />
 
-                <EditText
-                    android:id="@+id/yy_edit"
+                <NumberPicker
+                    android:id="@+id/year"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@color/traspaernt"
-                    android:gravity="center"
-                    android:hint="YYYY"
-                    android:imeOptions="actionNext"
-                    android:inputType="numberDecimal"
-                    android:maxLength="4"
-                    android:padding="8dp"
-                    android:textColorHint="@color/white"
-                    android:textSize="30dp"></EditText>
+                    android:layout_height="match_parent"
+                    android:theme="@style/NumberPickerText"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout

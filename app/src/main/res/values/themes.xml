@@ -22,4 +22,8 @@
     <style name="Theme.Abouqassim.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Abouqassim.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="NumberPickerText">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/visby_round</item>
+    </style>
 </resources>

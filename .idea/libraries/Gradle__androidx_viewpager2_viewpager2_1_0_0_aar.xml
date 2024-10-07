@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="Gradle: androidx.viewpager2:viewpager2:1.0.0@aar">
+  <library name="Gradle: androidx.viewpager2:viewpager2:1.0.0@aar" external-system-id="GRADLE">
     <ANNOTATIONS>
       <root url="jar://$PROJECT_DIR$/../gradle/caches/transforms-3/17473142177f1aaac34c6335ae7e71fa/transformed/viewpager2-1.0.0/annotations.zip!/" />
     </ANNOTATIONS>

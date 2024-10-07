@@ -1,7 +1,9 @@
 package com.abouqassilm;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
@@ -17,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.abouqassilm.AissamUtils;
@@ -78,22 +81,20 @@ public class Home extends AppCompatActivity {
             if (light)
                 linear.setElevation(d * 5);
             ui.setCornerRadius(d * 30);
-            android.graphics.drawable.RippleDrawable ripped;
-            ripped = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new  int[]{}}, new int[]{Color.parseColor(rippleColor)}), ui, null);
+            RippleDrawable ripped;
+            ripped = new RippleDrawable(new ColorStateList(new int[][]{new  int[]{}}, new int[]{Color.parseColor(rippleColor)}), ui, null);
             linear.setBackground(ripped);
             linear.setClickable(true);
         }
     }
     void viewEffect (LinearLayout linear , String color, boolean light) {
-        {
-            GradientDrawable ui = new GradientDrawable();
-            int d = (int) getApplicationContext().getResources().getDisplayMetrics().density;
-            ui.setColor(Color.parseColor(color));
-            if (light)
-                linear.setElevation(d * 5);
-            ui.setCornerRadius(d * 15);
-            linear.setBackground(ui);
-        }
+        GradientDrawable ui = new GradientDrawable();
+        int d = (int) getApplicationContext().getResources().getDisplayMetrics().density;
+        ui.setColor(Color.parseColor(color));
+        if (light)
+            linear.setElevation(d * 5);
+        ui.setCornerRadius(d * 15);
+        linear.setBackground(ui);
     }
     void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -183,6 +184,8 @@ public class Home extends AppCompatActivity {
             userDate.setText(new StringBuilder().append((day < 10) ? "0" + day : day).append(" • ").append((month < 10) ? "0" + month : month).append(" • ").append(year));
             hello.setText("Birthdays");
         }
+        AissamUtils.setFilterToImage(calen1, Color.parseColor(AissamUtils.blue));
+        AissamUtils.setFilterToImage(calen2, Color.parseColor(AissamUtils.blue));
         if (sharedPreferences.contains("dark")) {
             if (sharedPreferences.getString("dark", "").equals("on")) {
                 AissamUtils.setDarkBars(this);
@@ -192,14 +195,10 @@ public class Home extends AppCompatActivity {
                 AissamUtils.setTextColorDark(dds);
                 AissamUtils.setTextColorDark(hello);
                 AissamUtils.setFilterToImage (menuIcon, Color.WHITE);
-                AissamUtils.setFilterToImage(calen1, Color.WHITE);
-                AissamUtils.setFilterToImage(calen2, Color.WHITE);
                 buttonEffect(menu, AissamUtils.black, AissamUtils.grey, false);
                 background.setBackgroundColor(Color.parseColor(AissamUtils.black));
             } else {
                 AissamUtils.setLightBars(this);
-                AissamUtils.setFilterToImage(calen1, Color.BLACK);
-                AissamUtils.setFilterToImage(calen2, Color.BLACK);
                 AissamUtils.setTextColorLight(userDate);
                 AissamUtils.setTextColorLight(dd_mm);
                 AissamUtils.setTextColorLight(yy);
@@ -207,7 +206,7 @@ public class Home extends AppCompatActivity {
                 AissamUtils.setTextColorLight(hello);
                 AissamUtils.setFilterToImage (menuIcon, Color.BLACK);
                 buttonEffect(menu, AissamUtils.white, AissamUtils.grey, true);
-                background.setBackgroundColor(Color.parseColor(AissamUtils.white));
+                background.setBackgroundColor(Color.parseColor(AissamUtils.whiteSmoke));
             }
         }
 
@@ -228,7 +227,7 @@ public class Home extends AppCompatActivity {
 //        progress = (short) ( (((float)years / 60)) * 100);
         progress = (short) ( (((float)(months) / 12)) * 100);
         Progress();
-        yy.setText(String.valueOf(years) + "YO");
+        yy.setText(String.valueOf(years));
         dds.setText(dayOfWakeSTR);
         dd_mm.setText(months + (months > 1 ? " months" : " month") + " • " + remainingDays + (remainingDays > 1 ? " days" : " day"));
         Calendar nextBirth = Calendar.getInstance();
@@ -298,5 +297,8 @@ public class Home extends AppCompatActivity {
 //        timer.start();
     }
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), activity_user_data.class);
+        startActivity(intent);
+    }
 }

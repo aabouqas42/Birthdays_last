@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="Gradle: androidx.print:print:1.0.0@aar">
+  <library name="Gradle: androidx.print:print:1.0.0@aar" external-system-id="GRADLE">
     <ANNOTATIONS>
       <root url="jar://$PROJECT_DIR$/../gradle/caches/transforms-3/a0ef88f649878603ab3d2e983b9bc7b1/transformed/print-1.0.0/annotations.zip!/" />
     </ANNOTATIONS>

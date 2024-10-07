@@ -59,38 +59,41 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="5dp">
 
             <LinearLayout
                 android:id="@+id/dark_light"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:gravity="center"
+                android:layout_height="60dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/tdark"
+                <Switch
+                    android:id="@+id/themeSwitcher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Dark"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:fontFamily="@font/visby_round"
+                    android:text="Switch"
                     android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/set_edit"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:gravity="center"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="10dp">
 
                 <TextView
                     android:id="@+id/tedit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/visby_round"
                     android:gravity="center"
                     android:text="Edit"
                     android:textSize="20sp" />

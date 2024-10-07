@@ -41,12 +41,14 @@
             android:gravity="center"
             android:text="Birthdays needs some informations"
             android:textColor="@color/white"
+            android:fontFamily="@font/visby_round"
             android:textSize="24sp"></TextView>
 
     </LinearLayout>
 
     <!--BOTTOM-->
     <LinearLayout
+        android:id="@+id/userDateInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -64,6 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:autofillHints=""
                 android:background="@color/traspaernt"
                 android:gravity="center"
                 android:hint="DD"
@@ -73,7 +76,8 @@
                 android:nextFocusRight="@id/mm"
                 android:padding="8dp"
                 android:textColorHint="@color/white"
-                android:textSize="30dp"></EditText>
+                android:textSize="30sp"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/mm"
@@ -89,7 +93,8 @@
                 android:nextFocusRight="@id/yy"
                 android:padding="8dp"
                 android:textColorHint="@color/white"
-                android:textSize="30dp"></EditText>
+                android:textSize="30sp"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/yy"
@@ -104,7 +109,35 @@
                 android:maxLength="4"
                 android:padding="8dp"
                 android:textColorHint="@color/white"
-                android:textSize="30dp"></EditText>
+                android:textSize="30sp"
+                android:visibility="gone" />
+
+            <NumberPicker
+                android:id="@+id/day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:theme="@style/NumberPickerText">
+
+            </NumberPicker>
+
+            <NumberPicker
+                android:id="@+id/month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:theme="@style/NumberPickerText">
+
+            </NumberPicker>
+
+            <NumberPicker
+                android:id="@+id/year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:theme="@style/NumberPickerText">
+
+            </NumberPicker>
         </LinearLayout>
     </LinearLayout>
 
@@ -127,6 +160,7 @@
                 android:gravity="center"
                 android:text="Continue"
                 android:textColor="@color/white"
+                android:fontFamily="@font/visby_round"
                 android:textSize="30dp"></TextView>
         </LinearLayout>
     </LinearLayout>

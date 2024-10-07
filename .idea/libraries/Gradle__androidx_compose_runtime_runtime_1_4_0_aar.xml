@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="Gradle: androidx.compose.runtime:runtime:1.4.0@aar">
+  <library name="Gradle: androidx.compose.runtime:runtime:1.4.0@aar" external-system-id="GRADLE">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/../gradle/caches/transforms-3/6a33d3635404ab5ddfb667c525e1484c/transformed/runtime-1.4.0/jars/classes.jar!/" />
       <root url="file://$PROJECT_DIR$/../gradle/caches/transforms-3/6a33d3635404ab5ddfb667c525e1484c/transformed/runtime-1.4.0/res" />

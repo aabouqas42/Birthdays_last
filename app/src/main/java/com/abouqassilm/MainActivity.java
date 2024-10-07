@@ -64,16 +64,13 @@ public class MainActivity extends AppCompatActivity {
         setFont(t1);
         int isOnDark = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         SharedPreferences.Editor edit = sharedPreferences.edit();
-        if (sharedPreferences.getString("oneTime", "").equals("")) {
+        if (sharedPreferences.getString("oneTime", "").isEmpty()) {
             if (isOnDark == Configuration.UI_MODE_NIGHT_YES){
-                edit.putString("dark", "on");
-                edit.apply();
+                edit.putString("dark", "on").apply();
             } else {
-                edit.putString("dark", "off");
-                edit.apply();
+                edit.putString("dark", "off").apply();
             }
-            edit.putString("oneTime", "done");
-            edit.apply();
+            edit.putString("oneTime", "done").apply();
         }
         if (sharedPreferences.contains("dark")) {
             if (sharedPreferences.getString("dark", "").equals("on")) {

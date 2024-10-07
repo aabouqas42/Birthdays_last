@@ -1,8 +1,11 @@
 package com.abouqassilm;
 
+import static java.lang.Thread.sleep;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.RippleDrawable;
@@ -14,15 +17,31 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import org.w3c.dom.Text;
+
+import java.lang.reflect.Field;
 import java.util.Calendar;
+import java.util.Objects;
 
 public class activity_user_data extends AppCompatActivity {
+    LinearLayout cnt;
+    TextView cntText;
+    TextView ques;
+    LinearLayout background;
+    LinearLayout dataBackground;
+    NumberPicker day;
+    NumberPicker month;
+    NumberPicker year;
+    public int yearNumberPicker = 0;
+    public int monthNumberPicker = 0;
+    public int dayNumberPicker = 0;
     void buttonEffect(LinearLayout linear, String color, String rippleColor,  boolean light) {
         {
             android.graphics.drawable.GradientDrawable ui = new android.graphics.drawable.GradientDrawable();
@@ -48,26 +67,6 @@ public class activity_user_data extends AppCompatActivity {
             linear.setBackground(ui);
         }
     }
-    void showMessage(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-    }
-    void setFont(TextView text) {
-        Typeface customFont = ResourcesCompat.getFont(this, R.font.visby_round);
-        text.setTypeface(customFont);
-    }
-    void setColorToSystem(String color, LinearLayout l, boolean dark){
-        Window win = getWindow();
-        win.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        win.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        win.setStatusBarColor(Color.parseColor(color));
-        if (dark) {
-            l.setSystemUiVisibility(0);
-        } else {l.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);}
-        l.setBackgroundColor(Color.parseColor(color));
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
-            getWindow().setNavigationBarColor(Color.parseColor(color));
-        }
-    }
     void color(TextView text, String color){
         text.setTextColor(Color.parseColor(color));
     }
@@ -76,69 +75,80 @@ public class activity_user_data extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_data);
         SharedPreferences sharedPreferences = getSharedPreferences("myPref", MODE_PRIVATE);
-        LinearLayout cnt = findViewById(R.id.cnt);
-        TextView cntText = findViewById(R.id.cntText);
-        TextView ques = findViewById(R.id.ques);
-        LinearLayout background = findViewById(R.id.background);
-        LinearLayout dataBackground = findViewById(R.id.dataBackground);
-        EditText dd = findViewById(R.id.dd_mm);
-        EditText mm = findViewById(R.id.mm);
-        EditText yy = findViewById(R.id.yy);
-        String black = "#FF242426";
-        String white = "#FFFFFFFF";
-        String amoled = "#FF121212";
-        String grey = "#9E9E9E";
-        setFont(cntText);
-        setFont(mm);
-        setFont(dd);
-        setFont(yy);
-        setFont(ques);
-        yy.setHintTextColor(Color.parseColor("#9E9E9E"));
-        dd.setHintTextColor(Color.parseColor("#9E9E9E"));
-        mm.setHintTextColor(Color.parseColor("#9E9E9E"));
-        if (sharedPreferences.contains("dark")){
+        cnt = findViewById(R.id.cnt);
+        cntText = findViewById(R.id.cntText);
+        ques = findViewById(R.id.ques);
+        background = findViewById(R.id.background);
+        dataBackground = findViewById(R.id.dataBackground);
+
+        day = findViewById(R.id.day);
+        month = findViewById(R.id.month);
+        year = findViewById(R.id.year);
+
+        day.setMinValue(1);
+        day.setMaxValue(31);
+        month.setMinValue(1);
+        month.setMaxValue(12);
+        year.setMinValue(1900);
+        year.setMaxValue(Calendar.getInstance().get(Calendar.YEAR));
+        year.setValue(2000);
+
+        year.setOnValueChangedListener((numberPicker, i, i1) -> {
+            sharedPreferences.edit().putString("year", String.valueOf(i1)).apply();
+        });
+
+        month.setOnValueChangedListener((numberPicker, i, i1) -> {
+            sharedPreferences.edit().putString("month", String.valueOf(i1)).apply();
+        });
+        day.setOnValueChangedListener((numberPicker, i, i1) -> {
+            sharedPreferences.edit().putString("day", String.valueOf(i1)).apply();
+        });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            year.setSelectionDividerHeight(0);
+            month.setSelectionDividerHeight(0);
+            day.setSelectionDividerHeight(0);
+        }
+        if (sharedPreferences.contains("dark")) {
             if (sharedPreferences.getString("dark", "").equals("on")){
-                setColorToSystem(black, background, true);
-                background.setBackgroundColor(Color.parseColor(black));
-                color(dd, white);
-                color(mm, white);
-                color(yy, white);
-                color(ques, white);
-                color(cntText, white);
+                AissamUtils.setDarkBars(this);
+                background.setBackgroundColor(Color.parseColor(AissamUtils.black));
+                color(ques, AissamUtils.white);
+                color(cntText, AissamUtils.white);
                 buttonEffect(dataBackground, "#121313", "#121313", false);
-                buttonEffect(cnt, amoled, grey, false);
+                buttonEffect(cnt, AissamUtils.amoled, AissamUtils.grey, false);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    year.setTextColor(Color.WHITE);
+                    month.setTextColor(Color.WHITE);
+                    day.setTextColor(Color.WHITE);
+                }
             } else {
-                setColorToSystem(white, background, false);
-                background.setBackgroundColor(Color.parseColor(white));
-                color(dd, black);
-                color(mm, black);
-                color(yy, black);
-                color(ques, black);
-                color(cntText, black);
-                buttonEffect(cnt, white, grey, true);
+                AissamUtils.setLightBars(this);
+                background.setBackgroundColor(Color.parseColor(AissamUtils.whiteSmoke));
+                color(ques, AissamUtils.black);
+                color(cntText, AissamUtils.black);
+                buttonEffect(cnt, AissamUtils.white, AissamUtils.grey, true);
+                buttonEffect(dataBackground,"#FFFFFF", "#121313", false);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    year.setTextColor(Color.BLACK);
+                    month.setTextColor(Color.BLACK);
+                    day.setTextColor(Color.BLACK);
+                }
             }
         }
         cnt.setOnClickListener(new View.OnClickListener() {
             final Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             @Override
             public void onClick(View view) {
-                if (dd.getText().length() > 0 && mm.getText().length() > 0 && yy.getText().length() > 0) {
-                    if (Integer.parseInt(dd.getText().toString()) <= 31 && Integer.parseInt(mm.getText().toString()) <= 12 && Integer.parseInt(yy.getText().toString()) <= Calendar.getInstance().get(Calendar.YEAR)) {
-                        SharedPreferences.Editor edit = sharedPreferences.edit();
-                        edit.putString("day", dd.getText().toString());
-                        edit.putString("month", mm.getText().toString());
-                        edit.putString("year", yy.getText().toString());
-                        edit.apply();
-                        v.vibrate(20);
-                        Intent i = new Intent(getApplicationContext(), Home.class);
-                        startActivity(i);
-                    } else{
-                        showMessage("Birthdate Error..!");
-                    }
-                } else {
-                    v.vibrate(100);
-                    showMessage("All fields are required");
-                }
+                if (sharedPreferences.getString("year", "").isEmpty())
+                    sharedPreferences.edit().putString("year", "2000").apply();
+                if (sharedPreferences.getString("day", "").isEmpty())
+                    sharedPreferences.edit().putString("day", "1").apply();
+                if (sharedPreferences.getString("month", "").isEmpty())
+                    sharedPreferences.edit().putString("month", "1").apply();
+                v.vibrate(20);
+                Intent intent = new Intent(getApplicationContext(), Home.class);
+                startActivity(intent);
             }
         });
     }
