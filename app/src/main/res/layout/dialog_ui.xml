@@ -9,16 +9,15 @@
     tools:visibility="visible">
 
     <LinearLayout
-        android:id="@+id/dbg"
+        android:id="@+id/dBackground"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_margin="30dp"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/dline"
+            android:id="@+id/dLine"
             android:layout_width="80dp"
             android:layout_height="5dp"
             android:layout_margin="10dp"
@@ -43,22 +42,22 @@
                     android:id="@+id/day"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:theme="@style/NumberPickerText"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:theme="@style/NumberPickerText" />
 
                 <NumberPicker
                     android:id="@+id/month"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:theme="@style/NumberPickerText"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:theme="@style/NumberPickerText" />
 
                 <NumberPicker
                     android:id="@+id/year"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:theme="@style/NumberPickerText"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:theme="@style/NumberPickerText" />
             </LinearLayout>
 
             <LinearLayout
@@ -67,17 +66,16 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/cancel"
+                    android:id="@+id/dCancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:padding="10dp">
 
                     <TextView
-                        android:id="@+id/canceltx"
+                        android:id="@+id/dText2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -86,24 +84,16 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/dEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal"
-                    android:padding="8dp"></LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/edit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:padding="10dp">
 
                     <TextView
-                        android:id="@+id/donetx"
+                        android:id="@+id/dText1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Done"

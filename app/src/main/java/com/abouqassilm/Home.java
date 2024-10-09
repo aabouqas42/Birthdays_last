@@ -205,7 +205,7 @@ public class Home extends AppCompatActivity {
                 AissamUtils.setTextColorLight(dds);
                 AissamUtils.setTextColorLight(hello);
                 AissamUtils.setFilterToImage (menuIcon, Color.BLACK);
-                buttonEffect(menu, AissamUtils.white, AissamUtils.grey, true);
+                buttonEffect(menu, AissamUtils.white, AissamUtils.grey, false);
                 background.setBackgroundColor(Color.parseColor(AissamUtils.whiteSmoke));
             }
         }
