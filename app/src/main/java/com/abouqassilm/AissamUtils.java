@@ -19,13 +19,15 @@ public class AissamUtils {
     static String blue = "#2196F3";
     static String whiteSmoke = "#F5F5F5";
     static String brandiesBlue = "#0070FF";
+    static String green = "#03C03C";
     static void setLightBars(Activity activity) {
-        activity.getWindow().setStatusBarColor(Color.parseColor(whiteSmoke));
+        activity.getWindow().setStatusBarColor(Color.parseColor(white));
         activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        activity.getWindow().setNavigationBarColor(Color.parseColor(whiteSmoke));
+        activity.getWindow().setNavigationBarColor(Color.parseColor(white));
     }
     static void setDarkBars(Activity activity) {
         activity.getWindow().setStatusBarColor(Color.parseColor(black));
+        activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
         activity.getWindow().setNavigationBarColor(Color.parseColor(black));
     }
     static void setTextColorDark(TextView text){

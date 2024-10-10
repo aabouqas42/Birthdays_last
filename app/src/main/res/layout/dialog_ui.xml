@@ -67,12 +67,13 @@
 
                 <LinearLayout
                     android:id="@+id/dCancel"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                    app:layout_constraintWidth_percent="0.5">
 
                     <TextView
                         android:id="@+id/dText2"
@@ -85,12 +86,13 @@
 
                 <LinearLayout
                     android:id="@+id/dEdit"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                    app:layout_constraintWidth_percent="0.5">
 
                     <TextView
                         android:id="@+id/dText1"

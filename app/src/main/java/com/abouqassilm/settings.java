@@ -3,6 +3,7 @@ package com.abouqassilm;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,30 +20,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
 
+import com.kyleduo.switchbutton.SwitchButton;
+
 public class settings extends AppCompatActivity {
+    @SuppressLint("StaticFieldLeak")
     private static NumberPicker day;
+    @SuppressLint("StaticFieldLeak")
     private static NumberPicker month;
+    @SuppressLint("StaticFieldLeak")
     private static NumberPicker year;
-    private Switch  themeSwitcher;
-    boolean b = true;
-    public boolean swtched = false;
+    private SwitchButton themeSwitcher;
+    public char switched = 0;
     LinearLayout background;
     LinearLayout themeSwitcherButton;
-    LinearLayout line;
     LinearLayout back;
     LinearLayout set_edit;
     TextView tedit;
-    TextView set;
-    ImageView back_icon;
+    TextView title;
+    ImageView backIcon;
     LinearLayout dBackground;
     LinearLayout dLine;
     LinearLayout dEdit;
@@ -79,9 +83,32 @@ public class settings extends AppCompatActivity {
             GradientDrawable ui = new GradientDrawable();
             int d = (int) getApplicationContext().getResources().getDisplayMetrics().density;
             ui.setColor(Color.parseColor(color));
-            if (sharedPreferences.getString("dark", null).equals("off"))
+            if (!sharedPreferences.getString("dark", "").equals("on") && linear != back)
                 linear.setElevation(d * 5);
-            ui.setCornerRadius(d * 15);
+            if (linear == dEdit || linear == dCancel) {
+                float cornerRadius = (float) d * 15;
+                if (linear == dEdit) {
+                    ui.setCornerRadii(new float[]{
+                            0.0f, 0.0f,      // Top-left radius (flat)
+                            0.0f, 0.0f,      // Top-right radius (flat)
+                            cornerRadius, 0.0f, // Bottom-right radius
+                            cornerRadius, 0.0f  // Bottom-left radius
+                    });
+                } else {
+                    ui.setCornerRadii(new float[]{
+                            0.0f, 0.0f,      // Top-left radius (flat)
+                            0.0f, 0.0f,      // Top-right radius (flat)
+                            cornerRadius, cornerRadius, // Bottom-right radius
+                            cornerRadius, cornerRadius  // Bottom-left radius
+                    });
+                }
+
+            } else {
+                if (linear == back)
+                    ui.setCornerRadius(d * 50);
+                else
+                    ui.setCornerRadius(d * 15);
+            }
             RippleDrawable ripped;
             ripped = new RippleDrawable(new ColorStateList(new int[][]{new  int[]{}}, new int[]{Color.parseColor(rippleColor)}), ui, null);
             linear.setBackground(ripped);
@@ -99,49 +126,55 @@ public class settings extends AppCompatActivity {
             linear.setBackground(ui);
         }
     }
-    void showMessage(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
     void applyDarkTheme() {
-        setColorToSystem(AissamUtils.black, background, true);
-        themeSwitcher.setTextColor(Color.WHITE);
+        sharedPreferences.edit().putString("dark", "on").apply();
+        AissamUtils.setDarkBars(this);
+        themeSwitcher.setChecked(true);
+        ((TextView) findViewById(R.id.themeTitle)).setTextColor(Color.WHITE);
         background.setBackgroundColor(Color.parseColor(AissamUtils.black));
-        viewEffect(line, AissamUtils.soft_dark, false);
         buttonEffect(themeSwitcherButton, AissamUtils.soft_dark, AissamUtils.grey);
-        buttonEffect(back, AissamUtils.soft_dark, AissamUtils.grey);
+        buttonEffect(back, AissamUtils.black, AissamUtils.grey);
         buttonEffect(set_edit, AissamUtils.soft_dark, AissamUtils.grey);
-        filter(back_icon, AissamUtils.white);
+        filter(backIcon, AissamUtils.white);
         color(tedit, AissamUtils.white);
-        color(set, AissamUtils.white);
+        color(title, AissamUtils.white);
         // for dialog
         viewEffect(dBackground, AissamUtils.black, false);
         viewEffect(dLine, AissamUtils.white, false);
         color(dText1, AissamUtils.white);
         color(dText2, AissamUtils.white);
-        color(set, AissamUtils.white);
-        sharedPreferences.edit().putString("dark", "on").apply();
+        color(title, AissamUtils.white);
         buttonEffect(dEdit, AissamUtils.soft_dark, AissamUtils.grey);
         buttonEffect(dCancel, AissamUtils.soft_dark, AissamUtils.grey);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            year.setTextColor(Color.WHITE);
+            month.setTextColor(Color.WHITE);
+            day.setTextColor(Color.WHITE);
+        }
     }
     void applyLightTheme() {
-        setColorToSystem(AissamUtils.white, background, false);
-        themeSwitcher.setTextColor(Color.BLACK);
+        sharedPreferences.edit().putString("dark", "off").apply();
+        AissamUtils.setLightBars(this);
+        themeSwitcher.setChecked(false);
+        ((TextView) findViewById(R.id.themeTitle)).setTextColor(Color.BLACK);
         background.setBackgroundColor(Color.parseColor(AissamUtils.white));
-        viewEffect(line, AissamUtils.white, true);
         buttonEffect(themeSwitcherButton, AissamUtils.white, AissamUtils.grey);
         buttonEffect(back, AissamUtils.white, AissamUtils.grey);
         buttonEffect(set_edit, AissamUtils.white, AissamUtils.grey);
-        filter(back_icon, AissamUtils.black);
+        filter(backIcon, AissamUtils.black);
         color(tedit, AissamUtils.black);
-        color(set, AissamUtils.black);
+        color(title, AissamUtils.black);
         viewEffect(dBackground, AissamUtils.white, false);
         viewEffect(dLine, AissamUtils.soft_dark, false);
         color(dText1, AissamUtils.black);
         color(dText2, AissamUtils.black);
-        sharedPreferences.edit().putString("dark", "off").apply();
-        buttonEffect(dEdit, AissamUtils.white, AissamUtils.soft_dark);
-        buttonEffect(dCancel, AissamUtils.white, AissamUtils.soft_dark);
+        buttonEffect(dEdit, AissamUtils.white, AissamUtils.grey);
+        buttonEffect(dCancel, AissamUtils.white, AissamUtils.grey);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            year.setTextColor(Color.BLACK);
+            month.setTextColor(Color.BLACK);
+            day.setTextColor(Color.BLACK);
+        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,12 +183,11 @@ public class settings extends AppCompatActivity {
         themeSwitcher = findViewById(R.id.themeSwitcher);
         background =  findViewById(R.id.background);
         themeSwitcherButton = findViewById(R.id.themeSwitcherButton);
-        line = findViewById(R.id.line);
         back = findViewById(R.id.back);
         set_edit = findViewById(R.id.set_edit);
         tedit = findViewById(R.id.tedit);
-        set = findViewById(R.id.set);
-        back_icon = findViewById(R.id.back_icon);
+        title = findViewById(R.id.title);
+        backIcon = findViewById(R.id.backIcon);
         sharedPreferences = getSharedPreferences("myPref", MODE_PRIVATE);
         /*--------------DIALOG-------------*/
         Dialog dialog = new Dialog(this);
@@ -191,6 +223,7 @@ public class settings extends AppCompatActivity {
         day.setOnValueChangedListener((numberPicker, i, i1) -> {
             sharedPreferences.edit().putString("day", String.valueOf(i1)).apply();
         });
+        themeSwitcher.setTintColor(Color.parseColor(AissamUtils.green));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             year.setSelectionDividerHeight(0);
@@ -201,16 +234,24 @@ public class settings extends AppCompatActivity {
         dEdit.setOnClickListener(v -> {
             dialog.dismiss();
         });
-        themeSwitcher.setChecked(sharedPreferences.getString("dark", "").equals("on"));
         themeSwitcherButton.setOnClickListener(view -> {
-            if (!swtched && sharedPreferences.getString("dark", "").equals("off")) {
+            if (sharedPreferences.getString("dark", "").equals("off")) {
                 applyDarkTheme();
             } else {
                 applyLightTheme();
             }
-            swtched = swtched == false;
-            themeSwitcher.setChecked(swtched);
         });
+//        themeSwitcher.setOnCheckedChangeListener((buttonView, isChecked) -> {
+//            if (switched == 0 && sharedPreferences.getString("dark", "").equals("off")) {
+//                applyDarkTheme();
+//            } else {
+//                applyLightTheme();
+//            }
+//            if (switched == 0)
+//                switched = 1;
+//            else
+//                switched = 0;
+//        });
         if (sharedPreferences.getString("dark", "").equals("on")) {
             applyDarkTheme();
         } else {
@@ -232,7 +273,7 @@ public class settings extends AppCompatActivity {
             setFont(dText2);
             dialog.show();
         });
-        setFont(set);
+        setFont(title);
         setFont(tedit);
     }
 }

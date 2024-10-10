@@ -1,42 +1,31 @@
 package com.abouqassilm;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.BackEventCompat;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.CountDownTimer;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.abouqassilm.AissamUtils;
-import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
-import java.time.*;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import android.graphics.drawable.*;
 import androidx.core.content.res.ResourcesCompat;
 
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
-import android.graphics.*;
 
 import kotlin.Unit;
 
@@ -113,7 +102,7 @@ public class Home extends AppCompatActivity {
         circularProgressBar.setProgressMax(100);
 
         // Set ProgressBar Color
-        circularProgressBar.setProgressBarColor(Color.parseColor(AissamUtils.blue));
+        circularProgressBar.setProgressBarColor(Color.parseColor(AissamUtils.green));
         // or with gradient
 //        circularProgressBar.setProgressBarColorStart(Color.GRAY);
 //        circularProgressBar.setProgressBarColorEnd(Color.RED);
@@ -150,15 +139,15 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         background = findViewById(R.id.background);
-        menu = findViewById(R.id.menu);
+        menu = findViewById(R.id.back);
         calen1 = findViewById(R.id.calen1);
         calen2 = findViewById(R.id.calen2);
         userDate = findViewById(R.id.uerdata);
         yy = findViewById(R.id.yy);
         dd_mm = findViewById(R.id.dd_mm);
-        hello = findViewById(R.id.hello);
+        hello = findViewById(R.id.title);
         dds = findViewById(R.id.dayofwake);
-        menuIcon = findViewById(R.id.menuIcon);
+        menuIcon = findViewById(R.id.backIcon);
         settings = new Intent(getApplicationContext(), settings.class);
         circularProgressBar = findViewById(R.id.circularProgressBar);
         setFont(userDate);
@@ -167,8 +156,6 @@ public class Home extends AppCompatActivity {
         setFont(dd_mm);
         setFont(dds);
         SharedPreferences sharedPreferences = getSharedPreferences("myPref", MODE_PRIVATE);
-        SharedPreferences.Editor sh = sharedPreferences.edit();
-
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,7 +169,6 @@ public class Home extends AppCompatActivity {
             int month = Integer.parseInt(sharedPreferences.getString("month", "0"));
             int year = Integer.parseInt(sharedPreferences.getString("year", "0"));
             userDate.setText(new StringBuilder().append((day < 10) ? "0" + day : day).append(" • ").append((month < 10) ? "0" + month : month).append(" • ").append(year));
-            hello.setText("Birthdays");
         }
         AissamUtils.setFilterToImage(calen1, Color.parseColor(AissamUtils.blue));
         AissamUtils.setFilterToImage(calen2, Color.parseColor(AissamUtils.blue));
@@ -206,7 +192,7 @@ public class Home extends AppCompatActivity {
                 AissamUtils.setTextColorLight(hello);
                 AissamUtils.setFilterToImage (menuIcon, Color.BLACK);
                 buttonEffect(menu, AissamUtils.white, AissamUtils.grey, false);
-                background.setBackgroundColor(Color.parseColor(AissamUtils.whiteSmoke));
+                background.setBackgroundColor(Color.parseColor(AissamUtils.white));
             }
         }
 
@@ -295,10 +281,17 @@ public class Home extends AppCompatActivity {
 //            }
 //        };
 //        timer.start();
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent intent = new Intent(getApplicationContext(), activity_user_data.class);
+                startActivity(intent);
+            }
+        });
     }
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), activity_user_data.class);
-        startActivity(intent);
-    }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//
+//    }
 }

@@ -124,7 +124,7 @@ public class activity_user_data extends AppCompatActivity {
                 }
             } else {
                 AissamUtils.setLightBars(this);
-                background.setBackgroundColor(Color.parseColor(AissamUtils.whiteSmoke));
+                background.setBackgroundColor(Color.parseColor(AissamUtils.white));
                 color(ques, AissamUtils.black);
                 color(cntText, AissamUtils.black);
                 buttonEffect(cnt, AissamUtils.white, AissamUtils.grey, true);
